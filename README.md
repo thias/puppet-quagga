@@ -1,4 +1,6 @@
-# Overview
+# puppet-quagga
+
+## Overview
 
 Install, enable and configure the Quagga suite, for dynamic network routing
 protocols such as RIP, OSPF and BGP.
@@ -7,10 +9,10 @@ other protocols should be very easy.
 
 * `quagga` : Class to install and enable the server
 
-# Example Usage
+## Examples
 
     $ospf_router_id = $mymodule::vpn::vars::ipaddress[$::fqdn]
     class { 'quagga':
-        ospfd_content => template('mymodule/quagga/ospfd.conf.erb'),
+      ospfd_content => template('mymodule/quagga/ospfd.conf.erb'),
     }
 
