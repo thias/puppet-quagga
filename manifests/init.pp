@@ -16,11 +16,18 @@
 class quagga (
   $ospfd_content = undef,
   $ospfd_source  = undef
-) {
+) inherits ::quagga::params {
 
-  package { 'quagga': ensure => installed }
+  package { $::quagga::params::package:
+    alias  => 'quagga',
+    ensure => installed,
+  } ->
+  # The service refuses to start without this file (missing on Gentoo)
+  exec { 'create-initial-zebra.conf':
+    command => "/bin/echo \"hostname ${::hostname}\" > /etc/quagga/zebra.conf",
+    creates => '/etc/quagga/zebra.conf',
+  } ->
   service { 'zebra':
-    require => Package['quagga'],
     enable  => true,
     ensure  => running,
   }

@@ -1,3 +1,7 @@
+2013-05-29 - 0.1.1
+* Add a params class.
+* Add and test support for Gentoo (a default zebra.conf needs to be created).
+
 2013-04-24 - 0.1.0
 * Use 2-space indent.
 
