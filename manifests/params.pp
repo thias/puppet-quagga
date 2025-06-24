@@ -2,7 +2,7 @@
 #
 class quagga::params {
 
-  case $::operatingsystem {
+  case $facts['os']['name'] {
     'RedHat', 'Fedora', 'CentOS': {
       $package = 'quagga'
     }
