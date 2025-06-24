@@ -11,7 +11,7 @@ other protocols should be very easy.
 
 ## Examples
 
-    $ospf_router_id = $mymodule::vpn::vars::ipaddress[$::fqdn]
+    $ospf_router_id = $mymodule::vpn::vars::ipaddress[$facts['networking']['fqdn']]
     class { 'quagga':
       ospfd_content => template('mymodule/quagga/ospfd.conf.erb'),
     }

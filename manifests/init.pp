@@ -24,7 +24,7 @@ class quagga (
   } ->
   # The service refuses to start without this file (missing on Gentoo)
   exec { 'create-initial-zebra.conf':
-    command => "/bin/echo \"hostname ${::hostname}\" > /etc/quagga/zebra.conf",
+    command => "/bin/echo \"hostname ${facts['networking']['hostname']}\" > /etc/quagga/zebra.conf",
     creates => '/etc/quagga/zebra.conf',
   } ->
   service { 'zebra':
