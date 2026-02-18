@@ -15,21 +15,21 @@
 #
 class quagga (
   $ospfd_content = undef,
-  $ospfd_source  = undef
+  $ospfd_source  = undef,
 ) inherits ::quagga::params {
 
   package { $::quagga::params::package:
+    ensure => 'installed',
     alias  => 'quagga',
-    ensure => installed,
-  } ->
+  }
   # The service refuses to start without this file (missing on Gentoo)
-  exec { 'create-initial-zebra.conf':
-    command => "/bin/echo \"hostname ${::hostname}\" > /etc/quagga/zebra.conf",
+  -> exec { 'create-initial-zebra.conf':
+    command => "/bin/echo \"hostname ${facts['networking']['hostname']}\" > /etc/quagga/zebra.conf",
     creates => '/etc/quagga/zebra.conf',
-  } ->
-  service { 'zebra':
-    enable  => true,
-    ensure  => running,
+  }
+  -> service { 'zebra':
+    ensure => 'running',
+    enable => true,
   }
 
   # Included protocol-specific services :
@@ -41,23 +41,23 @@ class quagga (
 
   if $ospfd_content or $ospfd_source {
     service { 'ospfd':
-      require => [ Service['zebra'], File['/etc/quagga/ospfd.conf'] ],
+      ensure  => 'running',
       enable  => true,
-      ensure  => running,
+      require => [ Service['zebra'], File['/etc/quagga/ospfd.conf'] ],
     }
     file { '/etc/quagga/ospfd.conf':
-      require => Package['quagga'],
       content => $ospfd_content,
       source  => $ospfd_source,
+      require => Package['quagga'],
       notify  => Service['ospfd'],
     }
   } else {
     service { 'ospfd':
-      require => Package['quagga'],
+      ensure  => 'stopped',
       enable  => false,
-      ensure  => stopped,
+      require => Package['quagga'],
     }
-    file { '/etc/quagga/ospfd.conf': ensure => absent }
+    file { '/etc/quagga/ospfd.conf': ensure => 'absent' }
   }
 
 }

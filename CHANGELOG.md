@@ -1,10 +1,13 @@
-2013-05-29 - 0.1.1
+#### 2026-02-18 - 0.1.2
+* Fix legacy facts usage and modernize overall.
+
+#### 2013-05-29 - 0.1.1
 * Add a params class.
 * Add and test support for Gentoo (a default zebra.conf needs to be created).
 
-2013-04-24 - 0.1.0
+#### 2013-04-24 - 0.1.0
 * Use 2-space indent.
 
-2012-12-18 - 0.0.1
+#### 2012-12-18 - 0.0.1
 * Initial module release.
 
